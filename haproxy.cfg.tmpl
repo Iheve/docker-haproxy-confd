@@ -1,0 +1,39 @@
+global
+  log 127.0.0.1 local0
+  log 127.0.0.1 local1 notice
+  maxconn 4096
+  user haproxy
+  group haproxy
+
+defaults
+  log global
+  mode http
+  option httplog
+  option dontlognull
+  retries 3
+  timeout connect 5000
+  timeout client 50000
+  timeout server 50000
+
+frontend http-in
+  bind *:80
+{{range $app := lsdir "/services"}}
+  {{$users := printf "/services/%s/*" $app}}
+  {{range gets $users}}
+    {{$data := json .Value}}
+  acl is_{{$data.name}} hdr_end(host) -i {{$data.hostname}}
+  use_backend {{$data.name}} if is_{{$data.name}}
+  {{end}}
+{{end}}
+
+{{range $app := lsdir "/services"}}
+  {{$users := printf "/services/%s/*" $app}}
+  {{range gets $users}}
+    {{$data := json .Value}}
+backend {{$data.name}}
+  cookie SERVERID insert nocache indirect
+  option httpclose
+  option forwardfor
+  server Server {{$data.ip}}:{{$data.port}} cookie Server
+  {{end}}
+{{end}}

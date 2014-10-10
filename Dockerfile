@@ -16,6 +16,8 @@ ADD start.sh /start.sh
 # add confd config
 ADD haproxy.cfg.tmpl /etc/confd/templates/haproxy.cfg.tmpl
 ADD haproxy.toml /etc/confd/conf.d/haproxy.toml
+ADD crt-list.tmpl /etc/confd/templates/crt-list.tmpl
+ADD crt-list.toml /etc/confd/conf.d/crt-list.toml
 
 VOLUME /etc/confd
 

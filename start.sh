@@ -17,4 +17,7 @@ until confd -onetime -node $ETCD -config-file /etc/confd/conf.d/haproxy.toml; do
 done
 
 # Run confd in the background to watch the upstream servers
-confd -interval 10 -node $ETCD -config-file /etc/confd/conf.d/haproxy.toml
+confd -interval 10 -node $ETCD -config-file /etc/confd/conf.d/crt-list.toml >> /var/log/output.log 2>&1 &
+confd -interval 10 -node $ETCD -config-file /etc/confd/conf.d/haproxy.toml >> /var/log/output.log 2>&1 &
+
+tail -f /var/log/output.log

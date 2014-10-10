@@ -1,5 +1,5 @@
 FROM stackbrew/debian:jessie
-MAINTAINER Nicole Hubbard <code@nicolehubbard.net>
+MAINTAINER Pierre Ozoux <pierre@ozoux.net>
 
 # Install haproxy
 RUN apt-get update

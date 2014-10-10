@@ -25,9 +25,3 @@ pierreozoux/haproxy-confd
 ```
 
 And voilà!
-
-## Develop
-If you want to develop, please put the confd bin in your local folder before docker build (it's faster like this):
-```bash
-wget https://github.com/kelseyhightower/confd/releases/download/v0.6.3/confd-0.6.3-linux-amd64
-```
